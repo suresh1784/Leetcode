@@ -61,14 +61,32 @@ public class _714 {
          * to transition from the i-th day to the i+1 th day, we have two options:
          * 1. sell our stock: cash = Math.max(cash, hold + prices[i] - fee)
          * 2. buy a stock: hold = Math.max(hold, cash - prices[i])
+         *
+         *
+         *
+         * Intuition and Algorithm
+
+         At the end of the i-th day, we maintain cash, the maximum profit we could have if we did not have a share of stock,
+         and hold, the maximum profit we could have if we owned a share of stock.
+
+         To transition from the i-th day to the i+1-th day, we either sell our stock cash = max(cash, hold + prices[i] - fee)
+         or buy a stock hold = max(hold, cash - prices[i]). At the end,
+         we want to return cash. We can transform cash first without using temporary variables because selling and buying
+         n the same day can't be better than just continuing to hold the stock.
          */
         public int maxProfit(int[] prices, int fee) {
             int cash = 0;
             int hold = -prices[0];
             for (int i = 1; i < prices.length; i++) {
+                System.out.println("price["+i+"] : "+prices[i]);
+                System.out.println("cash  = Math.max( " +cash+ " , "+  (hold + prices[i] - fee) +" )");
                 cash = Math.max(cash, hold + prices[i] - fee);
+                System.out.println("cash : "+cash);
+                System.out.println("hold = Math.max( "+hold +" , "+ ( cash - prices[i]) +" )");
                 hold = Math.max(hold, cash - prices[i]);
+                System.out.println("hold : "+hold);
             }
+            System.out.println("Result - cash " + cash);
             return cash;
         }
     }
